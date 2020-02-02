@@ -1,0 +1,124 @@
+Rubber Marbles - K Sheldrake
+
+This file is part of rubbermarbles.
+
+Copyright (C) 2016 Kevin Sheldrake <rtfcode at gmail.com>
+This work is free. You can redistribute it and/or modify it under the
+terms of the Do What The Fuck You Want To Public License, Version 2,
+as published by Sam Hocevar. See the COPYING file or
+http://www.wtfpl.net/for more details.
+
+
+Introduction
+------------
+
+Rubber Marbles (aka rubbermarbles) is a binary data visualisation tool,
+inspired by Christopher Domas's Cantor Dust tool and his associated talk at
+DerbyCon 2012, 'The furture of RE Dynamic Binary Visualisation'.  Domas' work
+drew from previous work by Greg Conti and Aldo Cortesi: Conti for the two-
+dimensional bigraph approach and statistical testing to identify data types,
+and Cortesi for the coloured Hilbert curve ideas.
+
+If you've ever examined a binary file of unknown format then you'll probably be
+familiar with tools like hexdump, file and binwalk.  These 'first generation'
+binary analysis tools are pretty blunt: hexdump lets you look at bytes, words
+and ascii representations whereas file and binwalk rely on 'magic' bytes and 
+patterns to work out what a file contains.  These approaches are used heavily
+because they are the most well-known and there are few other tools that perform
+similar tasks.
+
+Enter Cantor Dust, a graphical binary visualisation tool that can display a
+file, or sections of it, in a variety of ways, such that a human operator can
+work out what it consists of.  It even includes a hexdump visualiser for the
+times when raw hex is necessary.  The meat of the program is really in the
+graphical visualisation.  In addition, Cantor Dust includes an Ida interface
+for side-by-side analysis, with scrolling and jumping in one program being
+replicated in the other.  Finally, Cantor Dust includes statistical tests that
+allow it to recognise sections of files automagically and report their types.
+
+Or, don't enter Cantor Dust.  Unfortunately, the only demo available was built
+for Windows and as it was built on Microsoft XNA there is a good chance it
+won't be ported to other operating systems.  At the time of writing, Cantor
+Dust has not been publicly released and no release date has been documented.
+
+While waiting for Cantor Dust, I decided to write my own cross-platform
+alternative.
+
+
+User Interface
+--------------
+
+The easiest way to understand Rubber Marbles is via its user interface.  The
+tool is launched by providing a file to examine on the command line.  The
+initial display is made up of 4 main windows, plus a menu bar.  The display
+can be considered in two halves, with each containing two of these windows.
+Each halve consists of a square Hilbert plot and a rectangular zigzag plot. The
+left half shows the whole file in both plots, whereas the right side shows the
+current zoom.  The area to zoom is selected on the left plots with the mouse.
+The right side plots will update to only display the area selected.
+
+A window can be selected by clicking the left mouse button at the start of the
+window and the right mouse button at the end.  Windows can be dragged as you'd
+expect.  If the file is small enough you may not need to zoom and therefore can
+hide the left hand windows, via the Window menu.
+
+After selecting a window on the zoomed plots, one or more visualisers can be
+launched to display the selection in a variety of different ways.
+
+File menu has Open and Quit items.
+
+Colours menu allows the user to select between Cortesi (default) colours, a
+grey scale and a coloured grey scale, which might be nicer on the eyes. Cortesi
+colouring is 0x00=black, 0xff=white, ascii=blue, low=green, high=red.
+
+Hilbert menu selects the direction the Hilbert curve takes.  The default is
+flipped causing it to go clockwise around the square instead of anti-clockwise.
+
+Zigzag menu selects the type of zigzag plot, either linear (left to right scan
+lines) or zigzag (left to right, then right to left, scan lines).
+
+The Go menu moves the selection windows to the start or end of the displays.
+
+The Visualise menu launches the visualisers.
+
+The Window menu allows the user to hide or show the left hand plots.
+
+The Help menu has a useful About box.
+
+
+Visualisers
+-----------
+
+All visualisers launch a new window which tracks the zoomed selection window.
+As the user moves the selection window on the zoomed plots, the data will
+change in the visualisers to reflect this.  Visualisers are free, however, to
+disconnect this updating by simply ignoring the update requests.
+
+The current visualisers are:
+* Trigraph - plot the bytes, halves, words and dwords as (x, y, z) co-ordinates
+  in 3D space and rotate.  The points from the start of the window will be blue
+  and those towards the end pink, with those between a mixture.
+
+  Use keys 1, 2, 4, and 8 to select the size of the data element in bytes.
+  Use keys b and l to select between big and little endian.
+  Use key c to cycle the colours: blue->pink, black-white, all blue.
+  Use Space to pause and unpause the rotation.
+  When paused, use n and m to rotate the display.
+
+* Delayed Trigraph - similar to Trigraph but plot the values as delayed
+  co-ordinates instead.
+
+* Hexdump - display the selection window as hex.
+  Use keys 1, 2, 4, and 8 to select the size of the data element in bytes.
+  Use keys b and l to select between big and little endian.
+  Use n and m to nudge forwards and backwards a byte.
+  Use Shift n and m to nudge forwards and backwards a data element.
+
+
+Contact
+-------
+
+Kev Sheldrake
+rtfcode@gmail.com
+http://rtfc.org.uk
+

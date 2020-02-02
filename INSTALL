@@ -1,0 +1,51 @@
+Rubber Marbles - K Sheldrake
+
+This file is part of rubbermarbles.
+
+Copyright (C) 2016 Kevin Sheldrake <rtfcode at gmail.com>
+This work is free. You can redistribute it and/or modify it under the
+terms of the Do What The Fuck You Want To Public License, Version 2,
+as published by Sam Hocevar. See the COPYING file or
+http://www.wtfpl.net/for more details.
+
+
+Libraries
+=========
+
+You will need the following installed:
+* Gtk2
+* GLFW
+* GLEW
+* OpenGL
+
+On Mac I used homebrew to install the packages.  On Arch linux I used pacman.
+
+
+Compile
+=======
+
+make mac
+
+or
+
+make linux
+
+
+Config file
+===========
+
+In the tarball in the etc directory there is a file:
+rb-vis.conf
+
+Copy this to either /etc/rb-vis.conf or ~/.rb-vis.conf and edit it so the
+paths to the visualisers are correct.  If the visualiers are in your PATH then
+Rubber Marbles will find them without specifying paths.
+
+
+Install
+=======
+
+sudo make install
+
+will copy the binaries to /usr/local/bin and the etc/rb-vis.conf file to /etc.
+

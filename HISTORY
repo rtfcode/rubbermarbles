@@ -1,0 +1,61 @@
+Rubber Marbles - K Sheldrake
+
+This file is part of rubbermarbles.
+
+Copyright (C) 2016 Kevin Sheldrake <rtfcode at gmail.com>
+This work is free. You can redistribute it and/or modify it under the
+terms of the Do What The Fuck You Want To Public License, Version 2,
+as published by Sam Hocevar. See the COPYING file or
+http://www.wtfpl.net/for more details.
+
+
+Version History
+
+ * v0.1 (beta) 22/4/2016
+   * Added INSTALL file.
+   * Makefile tidy.
+   * First testing release.
+
+ * v0.9 (alpha) 22/4/2016
+   * Converted from freeglut to glfw for portability.
+   * Converted all visualisers to fork-and-exec.
+   * Added visualiser config file, /etc/rb-vis.conf and ~/.rb-vis.conf for
+     simplified visualiser integration.
+   * Improved shared memory handling.
+   * Mac OS X port.
+
+ * v0.8 (alpha) 17/4/2016
+   * Massive code tidy.
+   * Added macros for error handling.
+   * Vast majority of functions now check input parameters and return values of
+     function calls.
+   * Minor bug fixes.
+   * Added WTFPL.
+
+ * v0.7 (alpha) 6/4/2016
+   * Improved 2D rendering by storing unhighlighted images and reusing them.
+   * Fixed step so it actually works properly.
+   * Added hexdump visualiser.
+   * Aside from the still-ugly code, this version is actually reasonably okay.
+
+ * v0.6 (alpha) 25/3/2016
+   * Added trigraph and delayed trigraph visualisers.
+   * Added better mouse button handling.
+   * Added drag window in GTK UI.
+
+ * v0.4 (alpha) and v0.5 (alpha)
+   * Divided code into separate files and created Makefile.
+   * Experimentation with OpenGL integration.
+
+ * v0.3 (alpha) 12/3/2016
+   * Slight code tidy.
+
+ * v0.2 (alpha) 12/3/2016
+   * Rewrote the display functions to make it much faster (and useable).
+   * Still very ugly.
+
+ * v0.1 (alpha) 9/11/2015
+   * First attempt at a gui tool on linux.
+   * Appears to work but code is ugly.
+
+

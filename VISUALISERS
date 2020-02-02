@@ -1,0 +1,103 @@
+Rubber Marbles - K Sheldrake
+
+This file is part of rubbermarbles.
+
+Copyright (C) 2016 Kevin Sheldrake <rtfcode at gmail.com>
+This work is free. You can redistribute it and/or modify it under the
+terms of the Do What The Fuck You Want To Public License, Version 2,
+as published by Sam Hocevar. See the COPYING file or
+http://www.wtfpl.net/for more details.
+
+
+Rubber Marbles Visualiser API
+=============================
+
+
+Introduction
+------------
+
+Rubber Marbles is a data visualiser.  Its main user interface displays the
+whole file and a zoomed version of the file as standard left-to-right 'zigzag'
+or linear plot and as a flipped Hilbert curve.  A region can be selected in the
+zoomed versions, which can then be further visualised using an external,
+fork()ed and exec()ed, module.
+
+
+Basics
+------
+
+A visualiser module needs to be an indepenent program with its own display
+loop.  Rubber Marbles will fork() and exec() the module and will monitor for its
+death.  In order for Rubber Marbles to communicate with the module, an area of
+shared memory is established and a path to it is provided as the only argument
+on the command line.
+
+A visualiser must register signal handlers to respond to the following signals:
+* SIGUSR1 - new data in shared memory.  bufsize and offset may have changed.
+* SIGHUP - quit.
+
+
+API
+---
+
+Rubber Marbles will create and maintain a shared memory buffer that is used
+to pass data to the visualisers:
+
+    struct rb_shm {
+        /* file */
+        char filename[PATH_MAX];
+        char semname[256];
+        int fd;
+        struct stat filestat;
+        /* data buffer */
+        int buf_type;
+        uint8_t *buf;
+        unsigned long offset;
+        unsigned long bufsize;
+    };
+
+    struct rb_shm *shm;
+
+This struct is contained within rb-shmdata.h.
+
+The shared memory can be accessed with:
+
+    int shm_open_buffer(char *shmpath, struct rb_shm **shm, sem_t **sem);
+
+contained within vis-shm.{c,h,o}.
+
+
+The attributes of the shared memory are as follows:
+
+    * filename
+        path to file being visualised.
+    * semname
+        path to named semaphore for locking the shared memory.
+    * offset
+        absolute offset into file for start of visualation.
+    * bufsize
+        size of buffer from offset to visualise.
+
+The remaining parameters are for internal use and should be ignored.
+
+Visualisers should read from the shared memory on initialisation and when
+instructed that the data has changed.  Visualisers should copy relevant data
+into its own memory space (within a sem_wait() lock) and then should work on
+its own memory until indicated that the data has changed again, whereby it
+should copy the data from shared memory again.
+
+
+Locking
+-------
+
+The visualiser must use sem_wait(sem) and sem_post(sem) to lock access to the
+shared memory while accessing it.
+
+
+Exiting
+-------
+
+Just exit(0);
+
+
+
